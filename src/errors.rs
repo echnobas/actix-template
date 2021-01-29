@@ -2,8 +2,13 @@ use actix_web::{
     dev::HttpResponseBuilder,
     HttpResponse,
     ResponseError,
+    http::{
+        header,
+        StatusCode
+    }
 };
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub enum ApplicationError {
     NotFound,
@@ -17,10 +22,6 @@ impl std::fmt::Display for ApplicationError {
     }
 }
 
-use actix_web::http::{
-    header,
-    StatusCode,
-};
 impl ResponseError for ApplicationError {
     fn status_code(&self) -> StatusCode {
         match *self {
@@ -34,5 +35,11 @@ impl ResponseError for ApplicationError {
         HttpResponseBuilder::new(self.status_code())
             .set_header(header::CONTENT_TYPE, "text/html; charset=utf-8")
             .body(self.to_string())
+    }
+}
+
+impl From<mongodb::error::Error> for ApplicationError {
+    fn from(_: mongodb::error::Error) -> ApplicationError {
+        ApplicationError::Internal
     }
 }
