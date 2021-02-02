@@ -27,7 +27,7 @@ use actix_web::{
     },
 };
 
-const DATABASE_URI: &str = "mongodb+srv://administrator:root@cluster0.kobuv.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const DATABASE_URI: &str = "mongodb+srv://administrator:saysikern@cluster0.kobuv.mongodb.net/<dbname>?retryWrites=true&w=majority";
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
